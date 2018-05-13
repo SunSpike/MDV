@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import kr.hs.dgsw.mdv.R;
 import kr.hs.dgsw.mdv.activity.ReadPDFActivity;
+import kr.hs.dgsw.mdv.activity.ReadTXTActivity;
 import kr.hs.dgsw.mdv.database.DatabaseHelper;
 import kr.hs.dgsw.mdv.item.MainItem;
 
@@ -65,8 +66,10 @@ public class MainAdapter extends BaseAdapter {
         itemPercent.setText(item.getFilePercent());
         itemImage.setImageResource(R.drawable.txt_icon);
 
-        final String [] extArray = item.getFileName().split(".");
-        final String extName = extArray[1];
+        Log.e("ITEMNAME", item.getFileName());
+        String fileName = item.getFileName();
+
+        final String extName = fileName.substring(fileName.length()-3, fileName.length());
 
         // 아이템 클릭 시 Read액티비티로 이동
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -103,13 +106,14 @@ public class MainAdapter extends BaseAdapter {
 
     public void openFile(String path, String extName){
         if ( extName.equals("txt")){
-            Intent i = new Intent(c, ReadPDFActivity.class);
+            Intent i = new Intent(c, ReadTXTActivity.class);
             i.putExtra("PATH", path);
             i.putExtra("PROCESS", myDb.getProcess(path));
             c.startActivity(i);
         } else if ( extName.equals("pdf")){
             Intent i = new Intent(c, ReadPDFActivity.class);
             i.putExtra("PATH", path);
+            i.putExtra("PROCESS", myDb.getProcess(path));
             c.startActivity(i);
         }
     }

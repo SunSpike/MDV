@@ -51,7 +51,7 @@ public class ReadTXTActivity extends AppCompatActivity{
         path = getIntent().getStringExtra("PATH");
 
         //Get process of selected item.
-        String processString = getIntent().getStringExtra("process");
+        String processString = getIntent().getStringExtra("PROCESS");
         process = Integer.parseInt(processString);
 
         Log.e("Process", Integer.toString(process));
