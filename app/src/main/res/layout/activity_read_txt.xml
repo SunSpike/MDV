@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.hs.dgsw.mdv.activity.ReadTXTActivity">
+    <ScrollView
+        android:id="@+id/readScrollView"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/colorAccent"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/readTextView"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/readFooter"
+        android:visibility="invisible"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <ImageButton
+                android:background="@android:color/transparent"
+                android:src="@drawable/glass_icon"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="찾기"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <ImageButton
+                android:background="@android:color/transparent"
+                android:src="@drawable/glass_icon"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="찾기"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <ImageButton
+                android:background="@android:color/transparent"
+                android:src="@drawable/glass_icon"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="찾기"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <ImageButton
+                android:id="@+id/goSettingButton"
+                android:background="@android:color/transparent"
+                android:src="@drawable/setting_icon"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="설정"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
