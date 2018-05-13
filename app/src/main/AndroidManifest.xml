@@ -23,7 +23,8 @@
         <activity android:name=".activity.ReadTXTActivity" />
         <activity android:name=".activity.setting.SettingActivity" />
         <activity android:name=".activity.setting.SettingFontActivity" />
-        <activity android:name=".activity.setting.SettingScreenActivity"></activity>
+        <activity android:name=".activity.setting.SettingScreenActivity" />
+        <activity android:name=".activity.ReadPDFActivity"></activity>
     </application>
 
 </manifest>

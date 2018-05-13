@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import kr.hs.dgsw.mdv.R;
 import kr.hs.dgsw.mdv.adapter.MainAdapter;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     MainAdapter listViewAdapter;
     DatabaseHelper myDb;
 
+    ArrayList<MainItem> listViewItemList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
         myDb = new DatabaseHelper(this);
 
-        listView = (ListView)findViewById(R.id.mainListView);
-        listViewAdapter = new MainAdapter();
-        listView.setAdapter(listViewAdapter);
-
+        //Initialize listViewItemList
         initListView();
+
+        listView = (ListView)findViewById(R.id.mainListView);
+        listViewAdapter = new MainAdapter(this, listViewItemList);
+        listView.setAdapter(listViewAdapter);
 
         Button goSetting = (Button)findViewById(R.id.settingButton);
         ImageButton floatButton = (ImageButton)findViewById(R.id.floatingButton);
-
-
 
         //region floatButton onClickListener
         floatButton.setOnClickListener(
@@ -137,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
     //initListView on Create
     public void initListView(){
+        listViewItemList = new ArrayList<MainItem>() ;
+
         Cursor res = myDb.getAllData();
         if(res.getCount() == 0){
             return;
@@ -144,10 +148,15 @@ public class MainActivity extends AppCompatActivity {
         while(res.moveToNext()){
             String name = res.getString(0).toString();
             String path = res.getString(1).toString();    //path
-            String process = res.getString(3).toString(); //percent
+            String percent = res.getString(3).toString(); //percent
 
             if ( !name.equals("name") && name != null){
-                listViewAdapter.addItem(name, path, process);
+                MainItem item = new MainItem();
+                item.setFileName(name);
+                item.setFilePath(path);
+                item.setFilePercent(percent);
+
+                listViewItemList.add(item);
             }
         }
     }
