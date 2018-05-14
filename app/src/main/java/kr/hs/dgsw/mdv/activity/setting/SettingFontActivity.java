@@ -80,12 +80,12 @@ public class SettingFontActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         int textSize = Integer.parseInt(fontSizeET.getText().toString());
-                        if ( textSize > 1 && textSize < 100 ){
+                        if ( textSize > 0 && textSize <= 100 ){
                             ReadTXTActivity.readTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, Float.parseFloat(fontSizeET.getText().toString()));
                             saveSettingData("textSize", textSize);
                             OptionDialog.dismiss();
                         }else{
-                            Toast.makeText(SettingFontActivity.this, "1~50 사이의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingFontActivity.this, "1~100 사이의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -104,7 +104,6 @@ public class SettingFontActivity extends AppCompatActivity {
     }
     //endregion
 
-    //region setTextColor
     public void setTextColor(){
         settingColor = ReadTXTActivity.readTextView.getCurrentTextColor();
 
@@ -116,15 +115,12 @@ public class SettingFontActivity extends AppCompatActivity {
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
-                settingColor = color;
-                ReadTXTActivity.readTextView.setTextColor(settingColor);
+                ReadTXTActivity.readTextView.setTextColor(color);
                 saveSettingData("textColor", color);
-                Log.e("Color", Integer.toString(color));
             }
         });
         colorPicker.show();
     }
-    //endregion
 
     public void saveSettingData(String tag, int data){
         editor.putInt(tag, data);

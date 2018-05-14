@@ -36,9 +36,6 @@ import kr.hs.dgsw.mdv.item.MainItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static MainActivity INSTANCE;
-
-    TextView selectPath;
     ListView listView;
     MainAdapter listViewAdapter;
     DatabaseHelper myDb;
@@ -62,38 +59,23 @@ public class MainActivity extends AppCompatActivity {
         Button goSetting = (Button)findViewById(R.id.settingButton);
         ImageButton floatButton = (ImageButton)findViewById(R.id.floatingButton);
 
-        //region floatButton onClickListener
+
+        //region FloatButton onClick addFiles
         floatButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //권한을 갖고있는지 확인, 23이상이라면 Dialog 표시하여 권한 요청
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                            Log.e("ERROR", "YOU DON'T HAVE PERMISSIONS");
+                            Toast.makeText(MainActivity.this, "파일 탐색 권한을 요청합니다.", Toast.LENGTH_SHORT).show();
                             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
                         }
 
                         new MaterialFilePicker().
                                 withActivity(MainActivity.this).
                                 withRequestCode(1000).
-                                //withFilter(Pattern.compile(".*\\.txt$")).
                                 withHiddenFiles(false).
                                 start();
-                    }
-                }
-        );
-        //endregion
-
-        //region listView onItemClickListener
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        MainItem item = (MainItem)parent.getItemAtPosition(position);
-                        Intent intent = new Intent(MainActivity.this, ReadTXTActivity.class);
-                        intent.putExtra("path", item.getFilePath());
-                        intent.putExtra("process", myDb.getProcess(item.getFilePath()));
-                        startActivity(intent);
                     }
                 }
         );
@@ -117,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(MainActivity.this, "동일 이름의 파일이 이미 존재합니다.", Toast.LENGTH_SHORT).show();
             }
-
-            Log.e("file", readFile(filePath));
-
         }
     }
 
@@ -129,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
         switch(requestCode){
             case 1001:{
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "권한 확인 완료!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(MainActivity.this, "Permission Denied?", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "권한 확인 실패..", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -146,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         while(res.moveToNext()){
-            String name = res.getString(0).toString();
-            String path = res.getString(1).toString();    //path
-            String percent = res.getString(3).toString(); //percent
+            String name = res.getString(0);
+            String path = res.getString(1);    //path
+            String percent = res.getString(3); //percent
 
-            if ( !name.equals("name") && name != null){
+            if ( !name.equals("name") ){
                 MainItem item = new MainItem();
                 item.setFileName(name);
                 item.setFilePath(path);
@@ -159,63 +138,5 @@ public class MainActivity extends AppCompatActivity {
                 listViewItemList.add(item);
             }
         }
-    }
-
-    public void initSetting(){
-        SharedPreferences setting = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
-
-    }
-
-    //readFile Method
-    private static String readFile(String path) {
-        String returnString = "";
-        BufferedReader br = null;
-
-        try{
-            br = new BufferedReader(new FileReader(path));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null){
-                sb.append(line);
-                sb.append("\n");
-                line = br.readLine();
-            }
-            returnString = sb.toString();
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }finally {
-            try{
-                br.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-
-        return returnString;
-        /*FileInputStream stream = null;
-        try {
-            stream = new FileInputStream(new File(path));
-            FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            Instead of using default, pass in a decoder.
-            return Charset.defaultCharset().decode(bb).toString();
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-            Log.e("FNFE", "FNFE");
-        }catch(IOException e){
-            e.printStackTrace();
-            Log.e("IO", "IO");
-        }
-        finally{
-            try{
-                stream.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-        return "";*/
     }
 }

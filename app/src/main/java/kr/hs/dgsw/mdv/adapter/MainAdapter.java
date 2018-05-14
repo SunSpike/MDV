@@ -26,6 +26,7 @@ public class MainAdapter extends BaseAdapter {
 
     Context c;
     DatabaseHelper myDb;
+    
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<MainItem> listViewItemList = new ArrayList<MainItem>() ;
 
@@ -69,9 +70,10 @@ public class MainAdapter extends BaseAdapter {
         Log.e("ITEMNAME", item.getFileName());
         String fileName = item.getFileName();
 
+        // 파일 확장자 명
         final String extName = fileName.substring(fileName.length()-3, fileName.length());
 
-        // 아이템 클릭 시 Read액티비티로 이동
+        // 아이템 클릭 시 확장자에 맞는 Read액티비티로 이동
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

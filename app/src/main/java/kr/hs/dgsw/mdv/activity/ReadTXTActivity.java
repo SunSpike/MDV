@@ -54,10 +54,6 @@ public class ReadTXTActivity extends AppCompatActivity{
         String processString = getIntent().getStringExtra("PROCESS");
         process = Integer.parseInt(processString);
 
-        Log.e("Process", Integer.toString(process));
-
-
-
         final LinearLayout footer = findViewById(R.id.readFooter);
         ImageButton goSettingButton = (ImageButton)findViewById(R.id.goSettingButton);
 
@@ -151,8 +147,6 @@ public class ReadTXTActivity extends AppCompatActivity{
         scrollViewParams.setMargins(0, top, 0 ,bottom);
         ReadTXTActivity.readTextView.setLayoutParams(textViewParams);
         ReadTXTActivity.readScroll.setLayoutParams(scrollViewParams);
-
-
     }
 
     public void saveProcess(){
@@ -160,29 +154,11 @@ public class ReadTXTActivity extends AppCompatActivity{
 
         float scrollY = readScroll.getScrollY();
         float maxScroll = readScroll.getChildAt(0).getHeight();
-        Log.e("YAxis", Float.toString(scrollY));
-        Log.e("YMAX", Float.toString(maxScroll));
-
         float formatTemp = (scrollY * 100) / maxScroll;
+
         percent = String.format("%.1f%%", formatTemp);
-        Log.e("percent", percent);
+
         myDb.saveProgress(path, readScroll.getScrollY(), percent);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e("MAX", Integer.toString(readScroll.getChildAt(0).getHeight()));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try{
-            Thread.sleep(500);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -201,13 +177,5 @@ public class ReadTXTActivity extends AppCompatActivity{
     protected void onDestroy() {
         saveProcess();
         super.onDestroy();
-    }
-
-    public void updateSetting(){
-
-    }
-
-    public static void ThreadResult(int value){
-        readScroll.setScrollY(value);
     }
 }

@@ -6,12 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by DH on 2018-03-29.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+
+    Context context;
 
     public static final String DATABASE_NAME = "mdv.db";
     public static final String BOOK_TABLE = "book_table";
@@ -35,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-
+        this.context = context;
     }
 
     public boolean insertData(String name, String path, int process, String percent) {
@@ -48,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(BOOK_TABLE, null, contentValues);
 
         if(result == -1){
-            Log.e("ERROR", "같은 이름의 파일이 존재합니다.");
+            Toast.makeText(context, "같은 이름의 파일이 이미 존재합니다.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -65,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(BOOK_TABLE, contentValues, "PATH = ?", new String[] { path });
         return true;
     }
+
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + BOOK_TABLE, null);

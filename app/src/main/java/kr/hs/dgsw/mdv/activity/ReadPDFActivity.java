@@ -30,6 +30,7 @@ public class ReadPDFActivity extends AppCompatActivity {
         Intent i = this.getIntent();
         String path = i.getExtras().getString("PATH");
         String process = i.getExtras().getString("PROCESS");
+
         File file = new File(path);
 
         if(file.canRead()){
