@@ -28,7 +28,7 @@
     </ScrollView>
     <LinearLayout
         android:id="@+id/readFooter"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:orientation="horizontal"
         android:weightSum="4"
         android:background="#FFFFFF"
@@ -79,12 +79,12 @@
             android:layout_height="wrap_content" >
             <ImageButton
                 android:background="@android:color/transparent"
-                android:src="@drawable/glass_icon"
+                android:src="@drawable/bookmark_icon"
                 android:scaleType="fitXY"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <TextView
-                android:text="찾기"
+                android:text="책갈피"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />

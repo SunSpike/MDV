@@ -135,7 +135,6 @@ public class ReadTXTActivity extends AppCompatActivity{
         int spaceSize = settingPref.getInt("spaceSize", 1);
         readTextView.setLineSpacing(spaceSize, 1);
 
-
         int top = settingPref.getInt("marginTop", 1);
         int bottom = settingPref.getInt("marginBottom", 1);
         int left = settingPref.getInt("marginLeft", 1);
@@ -150,8 +149,6 @@ public class ReadTXTActivity extends AppCompatActivity{
 
         int statusBar = settingPref.getInt("statusBar", 0);
         getWindow().getDecorView().setSystemUiVisibility(statusBar);
-
-
     }
 
     public void saveProcess(){

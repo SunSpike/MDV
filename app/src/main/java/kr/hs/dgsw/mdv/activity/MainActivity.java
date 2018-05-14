@@ -2,6 +2,7 @@ package kr.hs.dgsw.mdv.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             String fileName = file.getName();
 
             //insertData가 false라면 동일한 아이템이 존재한다는 뜻(경로가 같으므로).
-            if ( myDb.insertData(fileName, filePath, 0, "0.0%") != false ){
+            if ( myDb.insertBookData(fileName, filePath, 0, "0.0%") != false ){
                 listViewAdapter.addItem(fileName, filePath, "0.0%");
             }else {
                 Toast.makeText(MainActivity.this, "동일 이름의 파일이 이미 존재합니다.", Toast.LENGTH_SHORT).show();
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     public void initListView(){
         listViewItemList = new ArrayList<MainItem>() ;
 
-        Cursor res = myDb.getAllData();
+        Cursor res = myDb.getBookData();
         if(res.getCount() == 0){
             return;
         }
