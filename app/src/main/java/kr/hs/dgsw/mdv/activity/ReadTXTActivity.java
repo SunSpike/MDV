@@ -147,6 +147,11 @@ public class ReadTXTActivity extends AppCompatActivity{
         scrollViewParams.setMargins(0, top, 0 ,bottom);
         ReadTXTActivity.readTextView.setLayoutParams(textViewParams);
         ReadTXTActivity.readScroll.setLayoutParams(scrollViewParams);
+
+        int statusBar = settingPref.getInt("statusBar", 0);
+        getWindow().getDecorView().setSystemUiVisibility(statusBar);
+
+
     }
 
     public void saveProcess(){

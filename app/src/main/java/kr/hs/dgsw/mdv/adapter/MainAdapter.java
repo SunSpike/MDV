@@ -26,7 +26,7 @@ public class MainAdapter extends BaseAdapter {
 
     Context c;
     DatabaseHelper myDb;
-    
+
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<MainItem> listViewItemList = new ArrayList<MainItem>() ;
 

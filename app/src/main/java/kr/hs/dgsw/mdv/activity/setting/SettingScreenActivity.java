@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -199,6 +201,7 @@ public class SettingScreenActivity extends AppCompatActivity {
 
     //region setStatusBar
     public void setStatusBar(){
+
         int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
         int newUiOptions = uiOptions;
 
@@ -223,6 +226,14 @@ public class SettingScreenActivity extends AppCompatActivity {
         }
 
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
+
+        if ( newUiOptions == 0 ){
+            Toast.makeText(SettingScreenActivity.this, "이제 상태줄이 표시됩니다!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(SettingScreenActivity.this, "이제 상태줄이 표시되지 않습니다!", Toast.LENGTH_SHORT).show();
+        }
+
+        saveSettingData("statusBar", newUiOptions);
     }
     //endregion
 
