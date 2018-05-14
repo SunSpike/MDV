@@ -51,10 +51,10 @@ public class ReadTXTActivity extends AppCompatActivity{
         path = getIntent().getStringExtra("PATH");
 
         //Get process of selected item.
-        String processString = getIntent().getStringExtra("PROCESS");
-        process = Integer.parseInt(processString);
+        process = getIntent().getIntExtra("PROCESS", 0);
 
         final LinearLayout footer = findViewById(R.id.readFooter);
+        ImageButton bookmarkButton = findViewById(R.id.bookmarkButton);
         ImageButton goSettingButton = (ImageButton)findViewById(R.id.goSettingButton);
 
         //Read file at path and set text on readTextView.
@@ -83,6 +83,16 @@ public class ReadTXTActivity extends AppCompatActivity{
             }
         });
         //endregion
+
+
+        bookmarkButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
 
         goSettingButton.setOnClickListener(new View.OnClickListener() {
             @Override

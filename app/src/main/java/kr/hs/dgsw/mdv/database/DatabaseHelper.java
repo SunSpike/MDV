@@ -107,13 +107,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public String getProcess(String path){
+    public int getProcess(String path){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT B_PROCESS FROM " + BOOK_TABLE + " WHERE B_PATH = " + "'" + path + "'", null);
 
         res.moveToNext();
-        Log.e("file", res.getString(0));
-        return res.getString(0);
+
+        return Integer.parseInt(res.getString(0));
     }
 
     public void deleteAllData(){
