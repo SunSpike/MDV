@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +21,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import kr.hs.dgsw.mdv.R;
-import kr.hs.dgsw.mdv.activity.setting.SettingActivity;
 import kr.hs.dgsw.mdv.database.DatabaseHelper;
 
 public class ReadTXTActivity extends AppCompatActivity{
@@ -89,7 +87,7 @@ public class ReadTXTActivity extends AppCompatActivity{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        saveBookmark();
                     }
                 }
         );
@@ -132,6 +130,11 @@ public class ReadTXTActivity extends AppCompatActivity{
         }
     }
     //endregion
+
+
+    public void saveBookmark(){
+
+    }
 
     public void initSetting(){
         SharedPreferences settingPref = getSharedPreferences("Setting", Activity.MODE_PRIVATE);

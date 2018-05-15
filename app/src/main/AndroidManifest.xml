@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ReadTXTActivity" />
-        <activity android:name=".activity.setting.SettingActivity" />
+        <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.setting.SettingFontActivity" />
         <activity android:name=".activity.setting.SettingScreenActivity" />
         <activity android:name=".activity.ReadPDFActivity"></activity>

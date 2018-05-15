@@ -1,4 +1,4 @@
-package kr.hs.dgsw.mdv.activity.setting;
+package kr.hs.dgsw.mdv.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import kr.hs.dgsw.mdv.R;
+import kr.hs.dgsw.mdv.activity.setting.SettingFontActivity;
+import kr.hs.dgsw.mdv.activity.setting.SettingScreenActivity;
 
 public class SettingActivity extends AppCompatActivity {
 
