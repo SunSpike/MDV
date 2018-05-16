@@ -30,6 +30,7 @@ public class SettingActivity extends AppCompatActivity {
                 }
         );
 
+        //Hello Daily Commit?
         goScreenSetting.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
