@@ -266,6 +266,10 @@ public class ReadTXTActivity extends AppCompatActivity{
         getWindow().getDecorView().setSystemUiVisibility(statusBar);
     }
 
+    public void replaceAll(){
+
+    }
+
     public void saveProcess(){
         String percent;
 
