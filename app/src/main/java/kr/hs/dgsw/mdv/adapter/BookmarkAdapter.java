@@ -68,6 +68,7 @@ public class BookmarkAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 ReadTXTActivity.readScroll.setScrollY(item.getBookmarkProcess());
+                ReadTXTActivity.bookmarkDialog.dismiss();
             }
         });
 
@@ -88,11 +89,8 @@ public class BookmarkAdapter extends BaseAdapter{
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String name, String path, int process, String percent) {
-        BookmarkItem item = new BookmarkItem();
-        item.setBookmarkName(name);
-        item.setBookmarkPath(path);
-        item.setBookmarkProcess(process);
-        item.setBookmarkPercent(percent);
+        BookmarkItem item = new BookmarkItem(name, path, process, percent);
+        myDb.insertBookmarkData(name, path, process, percent);
         listViewItemList.add(item);
         notifyDataSetChanged();
     }

@@ -11,6 +11,13 @@ public class BookmarkItem {
     private int bookmarkProcess;
     private String bookmarkPercent;
 
+    public BookmarkItem(String bookmarkName, String bookmarkPath, int bookmarkProcess, String bookmarkPercent){
+        this.bookmarkName = bookmarkName;
+        this.bookmarkPath = bookmarkPath;
+        this.bookmarkProcess = bookmarkProcess;
+        this.bookmarkPercent = bookmarkPercent;
+    }
+
     public String getBookmarkName() {
         return bookmarkName;
     }
