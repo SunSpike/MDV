@@ -2,14 +2,18 @@ package kr.hs.dgsw.mdv.activity.setting;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.preference.DialogPreference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import kr.hs.dgsw.mdv.R;
@@ -70,10 +74,32 @@ public class SettingFontActivity extends AppCompatActivity {
         mBuilder.setView(mView);
 
         final EditText fontSizeET = mView.findViewById(R.id.fontSizeET);
+        final TextView sampleText = mView.findViewById(R.id.settingSampleTextView);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                sampleText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, Float.parseFloat(fontSizeET.getText().toString()));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        fontSizeET.addTextChangedListener(textWatcher);
+
         Button cancelButton = mView.findViewById(R.id.dialogCancel);
         Button okButton = mView.findViewById(R.id.dialogOK);
 
         final AlertDialog OptionDialog = mBuilder.create();
+
 
         okButton.setOnClickListener(
                 new View.OnClickListener() {

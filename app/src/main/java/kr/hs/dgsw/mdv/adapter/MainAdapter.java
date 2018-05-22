@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import kr.hs.dgsw.mdv.R;
+import kr.hs.dgsw.mdv.activity.ReadEPUBActivity;
 import kr.hs.dgsw.mdv.activity.ReadPDFActivity;
 import kr.hs.dgsw.mdv.activity.ReadTXTActivity;
 import kr.hs.dgsw.mdv.database.DatabaseHelper;
@@ -71,8 +72,8 @@ public class MainAdapter extends BaseAdapter {
         String fileName = item.getFileName();
 
         // 파일 확장자 명
-        final String extName = fileName.substring(fileName.length()-3, fileName.length());
-
+        final String extName = fileName.substring(fileName.lastIndexOf("."));
+        Log.e("EXTNAME", extName);
         // 아이템 클릭 시 확장자에 맞는 Read액티비티로 이동
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,13 +108,18 @@ public class MainAdapter extends BaseAdapter {
     }
 
     public void openFile(String path, String extName){
-        if ( extName.equals("txt")){
+        if ( extName.equals(".txt")){
             Intent i = new Intent(c, ReadTXTActivity.class);
             i.putExtra("PATH", path);
             i.putExtra("PROCESS", myDb.getProcess(path));
             c.startActivity(i);
-        } else if ( extName.equals("pdf")){
+        } else if ( extName.equals(".pdf")){
             Intent i = new Intent(c, ReadPDFActivity.class);
+            i.putExtra("PATH", path);
+            i.putExtra("PROCESS", myDb.getProcess(path));
+            c.startActivity(i);
+        } else if ( extName.equals(".epub")){
+            Intent i = new Intent(c, ReadEPUBActivity.class);
             i.putExtra("PATH", path);
             i.putExtra("PROCESS", myDb.getProcess(path));
             c.startActivity(i);

@@ -25,7 +25,8 @@
         <activity android:name=".activity.setting.SettingFontActivity" />
         <activity android:name=".activity.setting.SettingScreenActivity" />
         <activity android:name=".activity.ReadPDFActivity" />
-        <activity android:name=".activity.ReadEPUBActivity"></activity>
+        <activity android:name=".activity.ReadEPUBActivity"
+                  android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

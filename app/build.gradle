@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.barteksc:android-pdf-viewer:1.4.0'
+    implementation 'com.folioreader:folioreader:0.3.9'
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     implementation files('libs/epublib-core-latest.jar')
     implementation files('libs/slf4j-android-1.6.1-RC1-sources.jar')
