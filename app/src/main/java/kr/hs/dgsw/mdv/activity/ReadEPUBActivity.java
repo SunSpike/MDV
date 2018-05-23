@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.folioreader.FolioReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,19 +25,10 @@ public class ReadEPUBActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_epub);
-        AssetManager assetManager = getAssets();
-
-        EpubReader reader = new EpubReader();
-        TextView testTextView = findViewById(R.id.testTextView);
 
         path = getIntent().getStringExtra("PATH");
-        Log.e("E_PATH", path);
-        try{
-            FileInputStream epubInputStream = new FileInputStream(path);
-            Book book = reader.readEpub(epubInputStream);
-            testTextView.setText(book.toString());
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+
+        FolioReader folioReader = FolioReader.getInstance(getApplicationContext());
+        folioReader.openBook(path);
     }
 }

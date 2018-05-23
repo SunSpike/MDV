@@ -27,6 +27,10 @@
         <activity android:name=".activity.ReadPDFActivity" />
         <activity android:name=".activity.ReadEPUBActivity"
                   android:configChanges="orientation|screenSize" />
+        <activity
+            android:name="com.folioreader.ui.folio.activity.FolioActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
