@@ -66,7 +66,7 @@ public class MainAdapter extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         itemName.setText(item.getFileName());
         itemPercent.setText(item.getFilePercent());
-        itemImage.setImageResource(R.drawable.txt_icon);
+
 
         Log.e("ITEMNAME", item.getFileName());
         String fileName = item.getFileName();
@@ -74,6 +74,15 @@ public class MainAdapter extends BaseAdapter {
         // 파일 확장자 명
         final String extName = fileName.substring(fileName.lastIndexOf("."));
         Log.e("EXTNAME", extName);
+
+        if ( extName.equals(".txt")){
+            itemImage.setImageResource(R.drawable.icon_txt);
+        } else if ( extName.equals(".pdf")) {
+            itemImage.setImageResource(R.drawable.icon_pdf);
+        } else if ( extName.equals(".epub")) {
+            itemImage.setImageResource(R.drawable.icon_epub);
+        }
+
         // 아이템 클릭 시 확장자에 맞는 Read액티비티로 이동
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

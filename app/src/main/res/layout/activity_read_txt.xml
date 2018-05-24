@@ -43,7 +43,7 @@
             android:layout_height="wrap_content" >
             <ImageButton
                 android:background="@android:color/transparent"
-                android:src="@drawable/glass_icon"
+                android:src="@drawable/icon_glass"
                 android:scaleType="fitXY"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content" >
             <ImageButton
                 android:background="@android:color/transparent"
-                android:src="@drawable/glass_icon"
+                android:src="@drawable/icon_glass"
                 android:scaleType="fitXY"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
@@ -80,7 +80,7 @@
             <ImageButton
                 android:id="@+id/bookmarkButton"
                 android:background="@android:color/transparent"
-                android:src="@drawable/bookmark_icon"
+                android:src="@drawable/icon_bookmark"
                 android:scaleType="fitXY"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
@@ -99,7 +99,7 @@
             <ImageButton
                 android:id="@+id/goSettingButton"
                 android:background="@android:color/transparent"
-                android:src="@drawable/setting_icon"
+                android:src="@drawable/icon_setting"
                 android:scaleType="fitXY"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />

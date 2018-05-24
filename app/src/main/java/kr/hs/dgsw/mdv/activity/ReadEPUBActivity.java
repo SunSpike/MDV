@@ -29,6 +29,6 @@ public class ReadEPUBActivity extends AppCompatActivity {
         path = getIntent().getStringExtra("PATH");
 
         FolioReader folioReader = FolioReader.getInstance(getApplicationContext());
-        folioReader.openBook(path);
+        folioReader.openBook("file:///android_asset/epub_example.epub");
     }
 }

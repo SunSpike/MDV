@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         myDb = new DatabaseHelper(this);
-
+        myDb.dropTable();
+        myDb.createTable();
         //Initialize listViewItemList
         initListView();
 
