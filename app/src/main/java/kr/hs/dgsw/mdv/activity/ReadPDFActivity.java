@@ -3,6 +3,7 @@ package kr.hs.dgsw.mdv.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -25,6 +26,8 @@ public class ReadPDFActivity extends AppCompatActivity implements ReadInterface 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_pdf);
+
+        database = new DatabaseHelper(this);
 
         pdfView = findViewById(R.id.pdfView);
         ScrollBar scrollBar = findViewById(R.id.pdfScrollBar);
@@ -61,7 +64,10 @@ public class ReadPDFActivity extends AppCompatActivity implements ReadInterface 
     public void saveProcess(){
         String percent;
         int currentPage = pdfView.getCurrentPage();
+        Log.e("path", path);
+        Log.e("currentPage", Integer.toString(currentPage));
         int totalPage = pdfView.getPageCount();
+        Log.e("totalPage", Integer.toString(totalPage));
 
         float formatTemp = (currentPage * 100) / totalPage;
 

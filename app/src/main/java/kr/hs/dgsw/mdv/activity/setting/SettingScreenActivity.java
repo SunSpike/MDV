@@ -8,7 +8,10 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import kr.hs.dgsw.mdv.R;
@@ -94,11 +98,37 @@ public class SettingScreenActivity extends AppCompatActivity {
         View mView = getLayoutInflater().inflate(R.layout.dialog_setting_screen_space, null);
         mBuilder.setView(mView);
 
+        final TextView sampleText = mView.findViewById(R.id.settingSampleTextView);
         final EditText lineSpaceET = mView.findViewById(R.id.lineSpaceET);
         Button cancelButton = mView.findViewById(R.id.dialogCancel);
         Button okButton = mView.findViewById(R.id.dialogOK);
 
         final AlertDialog OptionDialog = mBuilder.create();
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try{
+                    int spaceSize = Integer.parseInt(lineSpaceET.getText().toString());
+                    sampleText.setLineSpacing(spaceSize, 1);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //TODO: 줄간격 textWatcher 만들기
+        lineSpaceET.addTextChangedListener(textWatcher);
 
         okButton.setOnClickListener(
                 new View.OnClickListener() {

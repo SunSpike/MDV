@@ -79,7 +79,7 @@ public class SettingFontActivity extends AppCompatActivity {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                sampleText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, Float.parseFloat(fontSizeET.getText().toString()));
+
             }
 
             @Override
@@ -89,7 +89,11 @@ public class SettingFontActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                try{
+                    sampleText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, Float.parseFloat(fontSizeET.getText().toString()));
+                }catch(NumberFormatException e){
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -106,12 +110,12 @@ public class SettingFontActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         int textSize = Integer.parseInt(fontSizeET.getText().toString());
-                        if ( textSize > 0 && textSize <= 100 ){
+                        if ( textSize >= 1 && textSize <= 99 ){
                             ReadTXTActivity.readTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, Float.parseFloat(fontSizeET.getText().toString()));
                             saveSettingData("textSize", textSize);
                             OptionDialog.dismiss();
                         }else{
-                            Toast.makeText(SettingFontActivity.this, "1~100 사이의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingFontActivity.this, "1~99 사이의 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

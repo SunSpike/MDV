@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,16 +53,28 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
     String path;
     int process;
 
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+
+    ListView bookmarkListView;
+    ArrayList<BookmarkItem> bookmarkItemList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_txt);
+
         database = new DatabaseHelper(this);
+
+        pref = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
+        editor = pref.edit();
+
         readScroll = (ScrollView)findViewById(R.id.readScrollView);
         readTextView = (TextView)findViewById(R.id.readTextView);
 
         //Initialize Settings
         initSetting();
+        initBookmarkList();
 
         //Get path of selected item.
         path = getIntent().getStringExtra("PATH");
@@ -122,7 +135,7 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
     //region File Read Method, append String to TextView
     private void readFile(String path) {
         BufferedReader br = null;
-        String resultString = "";
+
         try {
             br = new BufferedReader(new FileReader(path));
             String line = br.readLine();
@@ -149,11 +162,9 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
     //endregion
 
 
-    public void saveBookmark(){
+    public void initBookmarkList(){
         Cursor bookmarkCursor = database.getBookmarkData(path);
-        ArrayList<BookmarkItem> bookmarkItemList = new ArrayList<>();
 
-        StringBuffer buffer = new StringBuffer();
         while(bookmarkCursor.moveToNext()){
 
             //TODO: 이거 왜 순서 꼬이지????
@@ -166,12 +177,14 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
 
             bookmarkItemList.add(new BookmarkItem(name, path, process, percent));
         }
+    }
 
+    public void saveBookmark(){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(ReadTXTActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_bookmark, null);
         mBuilder.setView(mView);
 
-        ListView bookmarkListView = mView.findViewById(R.id.bookmarkListView);
+        bookmarkListView = mView.findViewById(R.id.bookmarkListView);
         final BookmarkAdapter bookmarkAdapter = new BookmarkAdapter(this, bookmarkItemList);
         bookmarkListView.setAdapter(bookmarkAdapter);
 
@@ -290,5 +303,4 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
         saveProcess();
         super.onPause();
     }
-
 }

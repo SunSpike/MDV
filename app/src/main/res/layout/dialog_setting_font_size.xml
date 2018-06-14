@@ -13,6 +13,7 @@
 
     <EditText
         android:id="@+id/fontSizeET"
+        android:maxLength="2"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
