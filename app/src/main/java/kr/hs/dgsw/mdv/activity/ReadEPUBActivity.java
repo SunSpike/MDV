@@ -14,10 +14,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import kr.hs.dgsw.mdv.R;
+import kr.hs.dgsw.mdv.activity.setting.ReadInterface;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.epub.EpubReader;
 
-public class ReadEPUBActivity extends AppCompatActivity {
+public class ReadEPUBActivity extends AppCompatActivity implements ReadInterface{
 
     String path;
 
@@ -30,5 +31,15 @@ public class ReadEPUBActivity extends AppCompatActivity {
 
         FolioReader folioReader = FolioReader.getInstance(getApplicationContext());
         folioReader.openBook("file:///android_asset/epub_example.epub");
+    }
+
+    @Override
+    public void saveProcess() {
+
+    }
+
+    @Override
+    public void initSetting() {
+
     }
 }

@@ -117,6 +117,7 @@ public class MainAdapter extends BaseAdapter {
     }
 
     public void openFile(String path, String extName){
+        //TODO: 여기서 PROCESS 빼기
         if ( extName.equals(".txt")){
             Intent i = new Intent(c, ReadTXTActivity.class);
             i.putExtra("PATH", path);

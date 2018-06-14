@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import kr.hs.dgsw.mdv.R;
+import kr.hs.dgsw.mdv.activity.setting.ReadInterface;
 import kr.hs.dgsw.mdv.activity.setting.SettingFontActivity;
 import kr.hs.dgsw.mdv.adapter.BookmarkAdapter;
 import kr.hs.dgsw.mdv.adapter.MainAdapter;
@@ -36,9 +37,9 @@ import kr.hs.dgsw.mdv.database.DatabaseHelper;
 import kr.hs.dgsw.mdv.item.BookmarkItem;
 import kr.hs.dgsw.mdv.item.MainItem;
 
-public class ReadTXTActivity extends AppCompatActivity{
+public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
 
-    DatabaseHelper myDb;
+    DatabaseHelper database;
 
     //Declare static for access from other activity.
     public static TextView readTextView;
@@ -55,7 +56,7 @@ public class ReadTXTActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_txt);
-        myDb = new DatabaseHelper(this);
+        database = new DatabaseHelper(this);
         readScroll = (ScrollView)findViewById(R.id.readScrollView);
         readTextView = (TextView)findViewById(R.id.readTextView);
 
@@ -149,7 +150,7 @@ public class ReadTXTActivity extends AppCompatActivity{
 
 
     public void saveBookmark(){
-        Cursor bookmarkCursor = myDb.getBookmarkData(path);
+        Cursor bookmarkCursor = database.getBookmarkData(path);
         ArrayList<BookmarkItem> bookmarkItemList = new ArrayList<>();
 
         StringBuffer buffer = new StringBuffer();
@@ -238,6 +239,7 @@ public class ReadTXTActivity extends AppCompatActivity{
         bookmarkDialog.show();
     }
 
+    @Override
     public void initSetting(){
         SharedPreferences settingPref = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
 
@@ -270,6 +272,7 @@ public class ReadTXTActivity extends AppCompatActivity{
 
     }
 
+    @Override
     public void saveProcess(){
         String percent;
 
@@ -279,7 +282,7 @@ public class ReadTXTActivity extends AppCompatActivity{
 
         percent = String.format("%.1f%%", formatTemp);
 
-        myDb.saveProgress(path, readScroll.getScrollY(), percent);
+        database.saveProgress(path, readScroll.getScrollY(), percent);
     }
 
     @Override
@@ -288,15 +291,4 @@ public class ReadTXTActivity extends AppCompatActivity{
         super.onPause();
     }
 
-    @Override
-    protected void onStop() {
-        saveProcess();
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        saveProcess();
-        super.onDestroy();
-    }
 }
