@@ -45,6 +45,7 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
     //Declare static for access from other activity.
     public static TextView readTextView;
     public static ScrollView readScroll;
+    public LinearLayout footer;
 
     //TODO: 리팩터링 시 static 지우도록 노력하기
     public static AlertDialog bookmarkDialog;
@@ -59,18 +60,27 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
     ListView bookmarkListView;
     ArrayList<BookmarkItem> bookmarkItemList = new ArrayList<>();
 
+    int paddingTop;
+    int paddingBottom;
+    int howToPaging;
+
+    float downX;
+    float upX;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_txt);
+
+        //TODO: 어플리케이션 키면 마지막으로 읽었던거 켜기
 
         database = new DatabaseHelper(this);
 
         pref = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
         editor = pref.edit();
 
-        readScroll = (ScrollView)findViewById(R.id.readScrollView);
-        readTextView = (TextView)findViewById(R.id.readTextView);
+        readScroll = findViewById(R.id.readScrollView);
+        readTextView = findViewById(R.id.readTextView);
+        footer = findViewById(R.id.readFooter);
 
         //Initialize Settings
         initSetting();
@@ -82,7 +92,7 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
         //Get process of selected item.
         process = getIntent().getIntExtra("PROCESS", 0);
 
-        final LinearLayout footer = findViewById(R.id.readFooter);
+
         ImageButton bookmarkButton = findViewById(R.id.bookmarkButton);
         ImageButton goSettingButton = (ImageButton)findViewById(R.id.goSettingButton);
 
@@ -95,23 +105,6 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
                 readScroll.setScrollY(process);
             }
         });
-
-        //region ScrollView touchEvent, Show setting footer when touch under 100ms.
-        readScroll.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Long pushTime = event.getEventTime() - event.getDownTime();
-                if ( event.getAction() == event.ACTION_UP ) {
-                    if ( pushTime < 100 ){
-                        footer.setVisibility(View.VISIBLE);
-                    }else{
-                        footer.setVisibility(View.INVISIBLE);
-                    }
-                }
-                return false;
-            }
-        });
-        //endregion
 
 
         bookmarkButton.setOnClickListener(
@@ -166,8 +159,6 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
         Cursor bookmarkCursor = database.getBookmarkData(path);
 
         while(bookmarkCursor.moveToNext()){
-
-            //TODO: 이거 왜 순서 꼬이지????
             String name = bookmarkCursor.getString(2);
             String path = bookmarkCursor.getString(1);
             int process = bookmarkCursor.getInt(3);
@@ -265,20 +256,77 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
         int spaceSize = settingPref.getInt("spaceSize", 1);
         readTextView.setLineSpacing(spaceSize, 1);
 
-        int top = settingPref.getInt("marginTop", 1);
-        int bottom = settingPref.getInt("marginBottom", 1);
+        paddingTop = settingPref.getInt("marginTop", 1);
+        paddingBottom = settingPref.getInt("marginBottom", 1);
         int left = settingPref.getInt("marginLeft", 1);
         int right = settingPref.getInt("marginRight", 1);
 
         FrameLayout.LayoutParams textViewParams = (FrameLayout.LayoutParams) ReadTXTActivity.readTextView.getLayoutParams();
         RelativeLayout.LayoutParams scrollViewParams = (RelativeLayout.LayoutParams) ReadTXTActivity.readScroll.getLayoutParams();
         textViewParams.setMargins(left, 0, right, 0);
-        scrollViewParams.setMargins(0, top, 0 ,bottom);
+        scrollViewParams.setMargins(0, paddingTop, 0 , paddingBottom);
         ReadTXTActivity.readTextView.setLayoutParams(textViewParams);
         ReadTXTActivity.readScroll.setLayoutParams(scrollViewParams);
 
         int statusBar = settingPref.getInt("statusBar", 0);
         getWindow().getDecorView().setSystemUiVisibility(statusBar);
+
+        howToPaging = settingPref.getInt("howToPaging", 0);
+        initPaging(howToPaging);
+    }
+
+    public void initPaging(int howToPaging){
+        if ( howToPaging == 0 ){
+            View.OnTouchListener onTouchListener = new View.OnTouchListener(){
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Long pushTime = event.getEventTime() - event.getDownTime();
+
+                    if ( event.getAction() == event.ACTION_UP ) {
+                        if ( pushTime < 100 ){
+                            footer.setVisibility(View.VISIBLE);
+                        }else{
+                            footer.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    return false;
+                }
+            };
+            Log.e("0", "0");
+            readScroll.setOnTouchListener(onTouchListener);
+        } else if ( howToPaging == 1 ) {
+            View.OnTouchListener onTouchListener = new View.OnTouchListener(){
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Long pushTime = event.getEventTime() - event.getDownTime();
+
+                    if ( event.getAction() == event.ACTION_DOWN ){
+                        downX = event.getX();
+                    }
+                    if ( event.getAction() == event.ACTION_MOVE ){
+                        return true;
+                    }
+                    if ( event.getAction() == event.ACTION_UP ) {
+                        upX = event.getX();
+
+                        if ( downX - upX > 0 ){
+                            readScroll.setScrollY(readScroll.getScrollY() + 2257 + paddingTop + paddingBottom);
+                        } else if ( downX - upX < 0 ){
+                            readScroll.setScrollY(readScroll.getScrollY() - 2237 + paddingTop + paddingBottom);
+                        }
+
+                        if ( pushTime < 100 ){
+                            footer.setVisibility(View.VISIBLE);
+                        }else{
+                            footer.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                    return false;
+                }
+            };
+            Log.e("1", "1");
+            readScroll.setOnTouchListener(onTouchListener);
+        }
     }
 
     public void replaceAll(){
@@ -296,6 +344,13 @@ public class ReadTXTActivity extends AppCompatActivity implements ReadInterface{
         percent = String.format("%.1f%%", formatTemp);
 
         database.saveProgress(path, readScroll.getScrollY(), percent);
+    }
+
+    @Override
+    protected void onResume() {
+        Log.e("resume", "resume");
+        initSetting();
+        super.onResume();
     }
 
     @Override

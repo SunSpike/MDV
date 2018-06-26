@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class SettingScreenActivity extends AppCompatActivity {
         Button setStatusBarButton = findViewById(R.id.statusBarSettingButton);
         Button setPagingButton = findViewById(R.id.pagingSettingButton);
         Button setScreenColorButton = findViewById(R.id.screenColorSettingButton);
+
         setLineSpaceButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -77,7 +79,7 @@ public class SettingScreenActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        setPaging();
                     }
                 }
         );
@@ -127,7 +129,6 @@ public class SettingScreenActivity extends AppCompatActivity {
             }
         };
 
-        //TODO: 줄간격 textWatcher 만들기
         lineSpaceET.addTextChangedListener(textWatcher);
 
         okButton.setOnClickListener(
@@ -136,7 +137,6 @@ public class SettingScreenActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         int spaceSize = Integer.parseInt(lineSpaceET.getText().toString());
                         if ( spaceSize > 1 && spaceSize < 100 ){
-                            ReadTXTActivity.readTextView.setLineSpacing(spaceSize, 1);
                             saveSettingData("spaceSize", spaceSize);
                             OptionDialog.dismiss();
                         }else{
@@ -199,11 +199,6 @@ public class SettingScreenActivity extends AppCompatActivity {
                              left >= 0   && left < 100   &&
                              right >= 0  && right < 100 )
                         {
-                            textViewParams.setMargins(left, 0, right, 0);
-                            scrollViewParams.setMargins(0, top, 0 ,bottom);
-                            ReadTXTActivity.readTextView.setLayoutParams(textViewParams);
-                            ReadTXTActivity.readScroll.setLayoutParams(scrollViewParams);
-
                             saveSettingData("marginLeft", left);
                             saveSettingData("marginTop", top);
                             saveSettingData("marginRight", right);
@@ -267,7 +262,42 @@ public class SettingScreenActivity extends AppCompatActivity {
     }
     //endregion
 
-    public void setPaging(){}
+    public void setPaging(){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingScreenActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_setting_screen_paging, null);
+        mBuilder.setView(mView);
+
+        final AlertDialog OptionDialog = mBuilder.create();
+
+        final RadioButton wayScrolling = mView.findViewById(R.id.wayScrolling);
+        final RadioButton wayPaging = mView.findViewById(R.id.wayPaging);
+        Button okButton = mView.findViewById(R.id.dialogOK);
+        Button cancelButton = mView.findViewById(R.id.dialogCancel);
+
+        okButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(wayScrolling.isChecked()){
+                            saveSettingData("howToPaging", 0);
+                        } else if (wayPaging.isChecked()){
+                            saveSettingData("howToPaging", 1);
+                        }
+                        OptionDialog.dismiss();
+                    }
+                }
+        );
+
+        cancelButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OptionDialog.dismiss();
+                    }
+                }
+        );
+        OptionDialog.show();
+    }
 
     //region setScreenColor
     public void setScreenColor(){
