@@ -57,9 +57,8 @@ public class MainActivity extends AppCompatActivity {
         listViewAdapter = new MainAdapter(this, listViewItemList);
         listView.setAdapter(listViewAdapter);
 
-        Button goSetting = (Button)findViewById(R.id.settingButton);
+        //Button goSetting = (Button)findViewById(R.id.settingButton);
         ImageButton floatButton = (ImageButton)findViewById(R.id.floatingButton);
-
 
         //region FloatButton onClick addFiles
         floatButton.setOnClickListener(
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
         //endregion
-}
+    }
 
     //At Select File
     @Override

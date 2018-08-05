@@ -79,17 +79,6 @@
                 android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/screenReplaceSettingButton"
-                android:background="@android:color/transparent"
-                android:text="배경색"
-                android:textSize="20dp"
-                android:textColor="#000000"
-                android:textAlignment="textStart"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
