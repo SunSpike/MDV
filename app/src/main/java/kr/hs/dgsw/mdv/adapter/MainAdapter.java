@@ -81,6 +81,10 @@ public class MainAdapter extends BaseAdapter {
             itemImage.setImageResource(R.drawable.icon_pdf);
         } else if ( extName.equals(".epub")) {
             itemImage.setImageResource(R.drawable.icon_epub);
+        } else if ( extName.equals(".jpg")){
+
+        } else {
+
         }
 
         // 아이템 클릭 시 확장자에 맞는 Read액티비티로 이동
@@ -118,6 +122,8 @@ public class MainAdapter extends BaseAdapter {
 
     public void openFile(String path, String extName){
         //TODO: 여기서 PROCESS 빼기
+        Log.e("path", path);
+
         if ( extName.equals(".txt")){
             Intent i = new Intent(c, ReadTXTActivity.class);
             i.putExtra("PATH", path);

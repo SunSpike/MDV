@@ -83,18 +83,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //At Select File
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if ( requestCode == 1000 && resultCode == RESULT_OK ){
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-
             File file = new File(filePath);
-
             String fileName = file.getName();
 
             //insertData가 false라면 동일한 아이템이 존재한다는 뜻(경로가 같으므로).
-            if ( myDb.insertBookData(fileName, filePath, 0, "0.0%") != false ){
+            if ( myDb.insertBookData(fileName, filePath, 0, "0.0%") ){
                 listViewAdapter.addItem(fileName, filePath, "0.0%");
             }else {
                 Toast.makeText(MainActivity.this, "동일 이름의 파일이 이미 존재합니다.", Toast.LENGTH_SHORT).show();

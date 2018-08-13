@@ -28,9 +28,9 @@ public class ReadEPUBActivity extends AppCompatActivity implements ReadInterface
         setContentView(R.layout.activity_read_epub);
 
         path = getIntent().getStringExtra("PATH");
-
+        Log.e("path123", path);
         FolioReader folioReader = FolioReader.getInstance(getApplicationContext());
-        folioReader.openBook("file:///android_asset/epub_example.epub");
+        folioReader.openBook(path);
     }
 
     @Override

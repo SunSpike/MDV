@@ -3,7 +3,7 @@
     package="kr.hs.dgsw.mdv">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -26,12 +26,14 @@
         <activity android:name=".activity.setting.SettingFontActivity" />
         <activity android:name=".activity.setting.SettingScreenActivity" />
         <activity android:name=".activity.ReadPDFActivity" />
-        <activity android:name=".activity.ReadEPUBActivity"
-                  android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.ReadEPUBActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.folioreader.ui.folio.activity.FolioActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.ReadPNGActivity"></activity>
     </application>
 
 </manifest>
